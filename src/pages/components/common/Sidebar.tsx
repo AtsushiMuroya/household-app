@@ -1,7 +1,61 @@
-import { Box, Drawer } from '@mui/material'
-import React from 'react'
+import { Box,Drawer, MenuItem } from '@mui/material'
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Toolbar from '@mui/material/Toolbar';
+import React, { FC } from 'react'
+import HouseIcon from '@mui/icons-material/House';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 
-const Sidebar = ({ drawerWidth,mobileOpen,handleDrawerTransitionEnd,handleDrawerClose,drawer }:{drawerWidth:number,mobileOpen:boolean, handleDrawerTransitionEnd:() => void,handleDrawerClose:() => void,drawer:JSX.Element}) => {
+interface SidebarProps {
+  drawerWidth: number,
+  mobileOpen: boolean,
+  handleDrawerTransitionEnd: () => void,
+  handleDrawerClose: () => void,
+}
+
+interface MenuItem {
+  text: string,
+  path: string,
+  icon: React.ComponentType,
+}
+
+
+const Sidebar: FC<SidebarProps> = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose }) => {
+  const menuItems: MenuItem[] = [
+    {
+      text: "Home",
+      path: "/",
+      icon: HouseIcon
+    },
+    {
+      text: "月間レポート",
+      path: "/report",
+      icon: AutoGraphIcon
+    }
+  ]
+  const drawer = (
+    <div>
+      <Toolbar />
+      <Divider />
+      <List>
+        {menuItems.map((item, index) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton >
+              <ListItemIcon>
+                {<item.icon /> }
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </div>
+  );
   return (
       <Box
         component="nav"
