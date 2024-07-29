@@ -66,6 +66,7 @@ export default function AppLayout() {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
+        {/* childrenのような感じでRouterの中のものを表示する */}
         <Outlet />
       </Box>
     </Box>

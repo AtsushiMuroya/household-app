@@ -6,9 +6,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 import HouseIcon from '@mui/icons-material/House';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import { NavLink } from 'react-router-dom';
 
 interface SidebarProps {
   drawerWidth: number,
@@ -37,13 +38,27 @@ const Sidebar: FC<SidebarProps> = ({ drawerWidth, mobileOpen, handleDrawerTransi
       icon: AutoGraphIcon
     }
   ]
+  const baseLinkStyle: CSSProperties = {
+    textDecoration: "none",
+    color: "inherit",
+    display: "block",
+  }
+  const activeStyle: CSSProperties = {
+    backgroundColor: 'rgba(0,0,0,0.08)'
+  }
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
         {menuItems.map((item, index) => (
-          <ListItem key={item.text} disablePadding>
+          <NavLink
+            key={item.text}
+            to={item.path}
+            style={({ isActive }) => {
+            return { ...baseLinkStyle, ...(isActive ? activeStyle : {}) }
+          }}>
+            <ListItem key={item.text} disablePadding>
             <ListItemButton >
               <ListItemIcon>
                 {<item.icon /> }
@@ -51,6 +66,7 @@ const Sidebar: FC<SidebarProps> = ({ drawerWidth, mobileOpen, handleDrawerTransi
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
+          </NavLink>
         ))}
       </List>
       <Divider />
